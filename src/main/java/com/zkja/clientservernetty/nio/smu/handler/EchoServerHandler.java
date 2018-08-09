@@ -15,25 +15,32 @@
  */
 package com.zkja.clientservernetty.nio.smu.handler;
 
+import io.netty.channel.*;
 import io.netty.channel.ChannelHandler.Sharable;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.util.concurrent.Future;
+import io.netty.util.concurrent.GenericFutureListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handler implementation for the echo server.
  */
 @Sharable
-public class EchoServerHandler extends ChannelInboundHandlerAdapter {
+public class EchoServerHandler extends ChannelOutboundHandlerAdapter {
+    Logger logger = LoggerFactory.getLogger(EchoServerHandler.class);
 
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) {
+    public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
 
-        ctx.write(msg);
-    }
+        ctx.writeAndFlush(msg).addListener(new GenericFutureListener<Future<? super Void>>() {
+            @Override
+            public void operationComplete(Future<? super Void> future) throws Exception {
+                //TODO 增加流水
+                logger.info("发送消息成功");
+            }
+        });
 
-    @Override
-    public void channelReadComplete(ChannelHandlerContext ctx) {
-        ctx.flush();
+
     }
 
     @Override

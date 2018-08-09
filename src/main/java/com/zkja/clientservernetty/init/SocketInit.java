@@ -29,17 +29,18 @@ public class SocketInit implements ApplicationRunner {
 	@Autowired
     private ServerSocketProperties serverSocketProperties;
 
-
-
     @Autowired
     private ThreadPoolTaskExecutor taskExecutor;
 
+	@Autowired
+    private EchoServer echoServer;
 
     
 	@Override
 	public void run(ApplicationArguments arg0) throws Exception {
 	    //启动smu对接server
-        EchoServer.start();
+		System.out.println("启动echoServer");
+		taskExecutor.execute(echoServer);
         //启动httpServer
 
 

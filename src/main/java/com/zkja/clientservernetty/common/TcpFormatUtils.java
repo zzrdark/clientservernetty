@@ -1,7 +1,8 @@
 package com.zkja.clientservernetty.common;
 
-import com.zkja.clientserver.domain.TcpReq;
-import com.zkja.clientserver.domain.TcpRes;
+
+import com.zkja.clientservernetty.domain.TcpReq;
+import com.zkja.clientservernetty.domain.TcpRes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

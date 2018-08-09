@@ -15,8 +15,14 @@
  */
 package com.zkja.clientservernetty.nio;
 
-import com.zkja.clientservernetty.nio.decoder.StringDecoder;
-import com.zkja.clientservernetty.nio.handler.EchoServerHandler;
+
+import com.zkja.clientservernetty.common.TcpFormatUtils;
+import com.zkja.clientservernetty.nio.smu.decoder.StringDecoder;
+import com.zkja.clientservernetty.nio.smu.encoder.StringEncoder;
+import com.zkja.clientservernetty.nio.smu.handler.AccessMessageHandler;
+import com.zkja.clientservernetty.nio.smu.handler.EchoServerHandler;
+import com.zkja.clientservernetty.nio.smu.handler.HttpHandler;
+import com.zkja.clientservernetty.property.ServerSocketProperties;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -27,9 +33,13 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.DelimiterBasedFrameDecoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
-import io.netty.handler.ssl.SslContext;
-import io.netty.handler.ssl.SslContextBuilder;
-import io.netty.handler.ssl.util.SelfSignedCertificate;
+import io.netty.util.internal.logging.InternalLoggerFactory;
+import io.netty.util.internal.logging.Slf4JLoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -37,15 +47,24 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Echoes back any received data from a client.
  */
-public final class EchoServer {
+@Component
+@EnableConfigurationProperties(ServerSocketProperties.class)
+public final class EchoServer implements Runnable {
+
+
+    private static Logger logger = LoggerFactory.getLogger(TcpFormatUtils.class);
+
+    @Autowired
+    private ServerSocketProperties serverSocketProperties;
 
     static final boolean SSL = System.getProperty("ssl") != null;
     static final int PORT = Integer.parseInt(System.getProperty("port", "8007"));
 
     //管理channel
-    private static Map<String, Channel> map = new ConcurrentHashMap<String, Channel>();
+    public static Map<String, ChannelHandlerContext> map = new ConcurrentHashMap<String, ChannelHandlerContext>();
 
-    public static void start() throws Exception {
+    @Override
+    public void run()  {
         // Configure SSL.
         /*final SslContext sslCtx;
         if (SSL) {
@@ -56,44 +75,81 @@ public final class EchoServer {
         }*/
 
         // Configure the server.
+        InternalLoggerFactory.setDefaultFactory(new Slf4JLoggerFactory());
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);
         EventLoopGroup workerGroup = new NioEventLoopGroup();
-        //handler
-        final EchoServerHandler serverHandler = new EchoServerHandler();
+
 
         //使用分隔符截取报文
         ByteBuf byteBuf = Unpooled.copiedBuffer("]".getBytes());
-        final DelimiterBasedFrameDecoder delimiterBasedFrameDecoder = new DelimiterBasedFrameDecoder(1024,byteBuf);
-        //解析zkja协议
-        final StringDecoder stringDecoder = new StringDecoder();
+        /*DelimiterBasedFrameDecoder delimiterBasedFrameDecoder = new DelimiterBasedFrameDecoder(1024,byteBuf);*/
 
         try {
             ServerBootstrap b = new ServerBootstrap();
             b.group(bossGroup, workerGroup)
              .channel(NioServerSocketChannel.class)
              .option(ChannelOption.SO_BACKLOG, 100)
-             .handler(new LoggingHandler(LogLevel.INFO))
+             /*.handler(new LoggingHandler(LogLevel.INFO))*/
              .childHandler(new ChannelInitializer<SocketChannel>() {
                  @Override
                  public void initChannel(SocketChannel ch) throws Exception {
                      ChannelPipeline p = ch.pipeline();
+                     //解析zkja协议
+                     final StringDecoder stringDecoder = new StringDecoder();
+                     final StringEncoder stringEncoder = new StringEncoder();
 
-                     //p.addLast(new LoggingHandler(LogLevel.INFO));
+                     final HttpHandler httpHandler = new HttpHandler(serverSocketProperties.getSmcUrl());
+                     //handler
+                     final EchoServerHandler serverHandler = new EchoServerHandler();
+                     final AccessMessageHandler accessMessageHandler = new AccessMessageHandler();
 
-                     //Inpipeline
-                     p.addLast(delimiterBasedFrameDecoder);
+                     final DelimiterBasedFrameDecoder delimiterBasedFrameDecoder = new DelimiterBasedFrameDecoder(1024,byteBuf);
+                     /*ch.pipeline().addLast(new ReadTimeoutHandler(10));
+                     ch.pipeline().addLast(new WriteTimeoutHandler(1));*/
+
+                     p.addLast(new LoggingHandler(LogLevel.INFO));
+
+
+
+
 
                      p.addLast(serverHandler);
+                     p.addLast(delimiterBasedFrameDecoder);
+
+                     p.addLast(stringDecoder);
+                     p.addLast(stringEncoder);
+
+                     p.addLast(accessMessageHandler);
+                     p.addLast(httpHandler);
+
+
+
+
+
                  }
              });
-
+            System.out.println("EchoServer注册完成");
             // Start the server.
-            ChannelFuture f = b.bind(PORT).sync();
+
+            ChannelFuture f = b.bind(Integer.valueOf(serverSocketProperties.getPort())).sync();/*.addListener(new GenericFutureListener<Future<? super Void>>() {
+                @Override
+                public void operationComplete(Future<? super Void> future) throws Exception {
+                    if(future.isSuccess()){
+                        System.out.println("serverSocketChannel  监听了"+serverSocketProperties.getPort()+"端口");
+                        logger.info("serverSocketChannel  监听了"+serverSocketProperties.getPort()+"端口");
+                    }
+
+                }
+            });*/
 
             // Wait until the server socket is closed.
             f.channel().closeFuture().sync();
-        } finally {
+            System.out.println("ServerBootstrap close" );
+        }catch (Exception e){
+            e.printStackTrace();
+        } finally{
             // Shut down all event loops to terminate all threads.
+            System.out.println("Shut down all event loops to terminate all threads.");
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
         }

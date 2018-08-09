@@ -4,8 +4,9 @@ import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.zkja.clientserver.anno.SkipJSon;
-import com.zkja.clientserver.domain.RespMessage;
+
+import com.zkja.clientservernetty.anno.SkipJSon;
+import com.zkja.clientservernetty.domain.RespMessage;
 import net.sf.oval.ConstraintViolation;
 import net.sf.oval.Validator;
 import org.apache.log4j.Logger;
