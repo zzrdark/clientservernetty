@@ -2,7 +2,10 @@ package com.zkja.clientservernetty.init;
 
 
 import com.zkja.clientservernetty.nio.EchoServer;
+import com.zkja.clientservernetty.nio.HttpServer;
 import com.zkja.clientservernetty.property.ServerSocketProperties;
+import io.netty.util.internal.logging.InternalLoggerFactory;
+import io.netty.util.internal.logging.Slf4JLoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,29 +23,27 @@ import java.util.Map;
 @date 2018年7月20日上午10:08:54
 */
 @Component
-@EnableConfigurationProperties(ServerSocketProperties.class)
 public class SocketInit implements ApplicationRunner {
 	
 	private static Logger logger = LoggerFactory.getLogger(SocketInit.class);
 
-	
-	@Autowired
-    private ServerSocketProperties serverSocketProperties;
 
     @Autowired
     private ThreadPoolTaskExecutor taskExecutor;
 
 	@Autowired
     private EchoServer echoServer;
-
+	@Autowired
+	private HttpServer httpServer;
     
 	@Override
 	public void run(ApplicationArguments arg0) throws Exception {
+		InternalLoggerFactory.setDefaultFactory(new Slf4JLoggerFactory());
 	    //启动smu对接server
-		System.out.println("启动echoServer");
+		logger.info("启动echoServer");
 		taskExecutor.execute(echoServer);
         //启动httpServer
-
+		taskExecutor.execute(httpServer);
 
 		 /*new Thread(new NioServerSocketRunnable(serverSocketProperties, queueManager, taskExecutor, socketManager)).start();
 		 new Thread(new Runnable() {

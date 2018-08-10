@@ -19,8 +19,16 @@ public class ServerSocketProperties {
     private String port;
     private Integer corePoolSize;
     private Integer maxPoolSize;
-    
     private String smcUrl;
+    private String serverport;
+
+    public String getServerport() {
+        return serverport;
+    }
+
+    public void setServerport(String serverport) {
+        this.serverport = serverport;
+    }
 
     public String getPort() {
         return port;

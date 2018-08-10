@@ -3,6 +3,7 @@ package com.zkja.clientservernetty.common;
 
 import com.zkja.clientservernetty.domain.TcpReq;
 import com.zkja.clientservernetty.domain.TcpRes;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +16,6 @@ import java.util.Date;
 public class TcpFormatUtils {
 
 	private static Logger logger = LoggerFactory.getLogger(TcpFormatUtils.class);
-
     /**
      * 解析smu发来的报文
      * @param data

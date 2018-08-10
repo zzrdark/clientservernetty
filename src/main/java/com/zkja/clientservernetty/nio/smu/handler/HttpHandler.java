@@ -5,23 +5,14 @@ import com.zkja.clientservernetty.common.HttpUtils;
 import com.zkja.clientservernetty.domain.TcpReq;
 import com.zkja.clientservernetty.domain.TcpRes;
 import com.zkja.clientservernetty.nio.EchoServer;
-import com.zkja.clientservernetty.property.ServerSocketProperties;
-import io.netty.bootstrap.Bootstrap;
+import com.zkja.clientservernetty.queue.QueueManager;
 import io.netty.channel.*;
-import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.SocketChannel;
-import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.http.HttpRequestEncoder;
-import io.netty.handler.codec.http.HttpResponseDecoder;
 import io.netty.util.concurrent.GenericFutureListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.stereotype.Component;
 
 import java.util.Map;
-import java.util.concurrent.Future;
+
 
 /**
  * @author zzr
@@ -37,12 +28,21 @@ public class HttpHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
         if (msg instanceof TcpRes){
+
+            //TODO 以后这里加判断是否下发上来的响应消息
+            ChannelHandlerContext httpChannel = QueueManager.rmBwlshMap(((TcpRes)msg).getBwlsh());
+            if(httpChannel != null){
+                logger.info("响应smc下发消息");
+                httpChannel.write(msg);
+                return ;
+            }
+
             logger.info("request="+((TcpRes)msg).toString());
             Map<String, String> map = HttpUtils.getHttpReq((TcpRes) msg);
-            //TODO 以后这里加判断是否下发上来的响应消息
             String respJson = HttpGetPostUtil.doPostStr(url, map);
             System.out.println("HttpHandler"+respJson);
             TcpReq tcpReq = HttpUtils.getHttpRes(respJson);
+            setImeiChannel(tcpReq, ctx);
             ChannelFuture future = ctx.write(tcpReq);
             future.addListener(new GenericFutureListener<io.netty.util.concurrent.Future<? super Void>>() {
                 @Override
@@ -50,18 +50,13 @@ public class HttpHandler extends ChannelInboundHandlerAdapter {
 
                 }
             });
-
-
         }
-
-
     }
 
     private void setImeiChannel(TcpReq tcpReq, ChannelHandlerContext ctx){
         if(tcpReq != null || tcpReq.getImei() != null ){
-            EchoServer.map.put(tcpReq.getImei(),ctx);
+            QueueManager.putMap(tcpReq.getImei(),ctx);
         }
-
     }
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {

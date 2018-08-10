@@ -33,8 +33,8 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.DelimiterBasedFrameDecoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
+import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
-import io.netty.util.internal.logging.Slf4JLoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,15 +53,13 @@ public final class EchoServer implements Runnable {
 
 
     private static Logger logger = LoggerFactory.getLogger(TcpFormatUtils.class);
-
     @Autowired
     private ServerSocketProperties serverSocketProperties;
 
     static final boolean SSL = System.getProperty("ssl") != null;
     static final int PORT = Integer.parseInt(System.getProperty("port", "8007"));
 
-    //管理channel
-    public static Map<String, ChannelHandlerContext> map = new ConcurrentHashMap<String, ChannelHandlerContext>();
+
 
     @Override
     public void run()  {
@@ -75,7 +73,6 @@ public final class EchoServer implements Runnable {
         }*/
 
         // Configure the server.
-        InternalLoggerFactory.setDefaultFactory(new Slf4JLoggerFactory());
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);
         EventLoopGroup workerGroup = new NioEventLoopGroup();
 
@@ -109,10 +106,6 @@ public final class EchoServer implements Runnable {
 
                      p.addLast(new LoggingHandler(LogLevel.INFO));
 
-
-
-
-
                      p.addLast(serverHandler);
                      p.addLast(delimiterBasedFrameDecoder);
 
@@ -121,16 +114,10 @@ public final class EchoServer implements Runnable {
 
                      p.addLast(accessMessageHandler);
                      p.addLast(httpHandler);
-
-
-
-
-
                  }
              });
-            System.out.println("EchoServer注册完成");
+             logger.info("EchoServer注册完成");
             // Start the server.
-
             ChannelFuture f = b.bind(Integer.valueOf(serverSocketProperties.getPort())).sync();/*.addListener(new GenericFutureListener<Future<? super Void>>() {
                 @Override
                 public void operationComplete(Future<? super Void> future) throws Exception {
@@ -144,12 +131,10 @@ public final class EchoServer implements Runnable {
 
             // Wait until the server socket is closed.
             f.channel().closeFuture().sync();
-            System.out.println("ServerBootstrap close" );
         }catch (Exception e){
             e.printStackTrace();
         } finally{
             // Shut down all event loops to terminate all threads.
-            System.out.println("Shut down all event loops to terminate all threads.");
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
         }

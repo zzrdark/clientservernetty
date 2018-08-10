@@ -16,3 +16,5 @@ https://blog.csdn.net/prestigeding/article/details/53980790
 Netty之实现自定义简单的编解码器一（MessageToByteEncoder<Integer>和ByteToMessageDecoder）
 https://blog.csdn.net/zbw18297786698/article/details/53645313
 
+netty高级篇(3)-HTTP协议开发 案例
+https://www.cnblogs.com/carl10086/p/6185095.html

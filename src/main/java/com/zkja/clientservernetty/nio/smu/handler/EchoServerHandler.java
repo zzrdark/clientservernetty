@@ -19,6 +19,8 @@ import io.netty.channel.*;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
+import io.netty.util.internal.logging.InternalLogger;
+import io.netty.util.internal.logging.InternalLoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,19 +30,9 @@ import org.slf4j.LoggerFactory;
 @Sharable
 public class EchoServerHandler extends ChannelOutboundHandlerAdapter {
     Logger logger = LoggerFactory.getLogger(EchoServerHandler.class);
-
     @Override
     public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
-
-        ctx.writeAndFlush(msg).addListener(new GenericFutureListener<Future<? super Void>>() {
-            @Override
-            public void operationComplete(Future<? super Void> future) throws Exception {
-                //TODO 增加流水
-                logger.info("发送消息成功");
-            }
-        });
-
-
+        ctx.writeAndFlush(msg);
     }
 
     @Override
