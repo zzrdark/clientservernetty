@@ -312,7 +312,19 @@ public class TcpRes {
      * 蓝牙固定标签ID
      */
     private String lybqid;
-
+	/**
+	 * 心率采集频率
+	 */
+	private String xlcjpl;
+	/**
+	 * 蓝牙合法标签ID
+	 */
+	private String lyhfbqid;
+	/**
+	 * 蓝牙标签采集频率
+	 */
+	private String lybqcjpl;
+	
     public Long getTime() {
         return time;
     }
@@ -912,6 +924,31 @@ public class TcpRes {
 
 	public void setSbwd(String sbwd) {
 		this.sbwd = sbwd;
+	}
+
+	
+	public String getXlcjpl() {
+		return xlcjpl;
+	}
+
+	public void setXlcjpl(String xlcjpl) {
+		this.xlcjpl = xlcjpl;
+	}
+
+	public String getLyhfbqid() {
+		return lyhfbqid;
+	}
+
+	public void setLyhfbqid(String lyhfbqid) {
+		this.lyhfbqid = lyhfbqid;
+	}
+
+	public String getLybqcjpl() {
+		return lybqcjpl;
+	}
+
+	public void setLybqcjpl(String lybqcjpl) {
+		this.lybqcjpl = lybqcjpl;
 	}
 
 	@Override

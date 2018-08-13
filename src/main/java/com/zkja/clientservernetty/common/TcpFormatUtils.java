@@ -1,9 +1,7 @@
 package com.zkja.clientservernetty.common;
 
-
 import com.zkja.clientservernetty.domain.TcpReq;
 import com.zkja.clientservernetty.domain.TcpRes;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +14,7 @@ import java.util.Date;
 public class TcpFormatUtils {
 
 	private static Logger logger = LoggerFactory.getLogger(TcpFormatUtils.class);
+
     /**
      * 解析smu发来的报文
      * @param data
@@ -346,11 +345,23 @@ public class TcpFormatUtils {
         		t.setMbbj(data.substring(69, 72));
         		t.setTz(data.substring(72, 74));
         		t.setSg(data.substring(74, 77));
-        		t.setYlkj(data.substring(77,83));
+        		t.setXlcjpl(data.substring(77, 81));
+        		t.setYlkj(data.substring(81,83));
         	}else if(SmuConstant.ACTION_BLUETOOTHSETUP_ANSWER.equals(bwlx)){
         		String[] arr = data.split(",");
         		t.setLybqmc(arr[1]);
         		t.setLybqid(arr[2]);
+        		StringBuffer sb = new StringBuffer();
+        		for(int i=3;i<arr.length-1;i++){
+        			if(i==arr.length-2){
+        				sb.append(arr[i]);
+        			}else{
+        				sb.append(arr[i]+",");
+        			}
+        		}
+        		t.setLyhfbqid(sb.toString());
+        		String s = arr[arr.length-1];
+        		t.setLybqcjpl(s.substring(0, 4));
         		t.setYlkj(arr[3]);
         	}else if(SmuConstant.ACTION_WN.equals(bwlx)){
         		int firstLeft = data.indexOf("(");
@@ -736,12 +747,15 @@ public class TcpFormatUtils {
 			while(tcpReq.getSg().length()<3){
 				tcpReq.setSg("0"+tcpReq.getSg());
 			}
+			while(tcpReq.getXlcjpl().length()<4){
+				tcpReq.setXlcjpl("0"+tcpReq.getXlcjpl());
+			}
 			sb.append("[");
 			sb.append(tcpReq.getBwlx());
 			sb.append(tcpReq.getBwlsh());
 			StringBuffer str = new StringBuffer();
 			str.append(new String(tcpReq.getImei()+tcpReq.getPid()+tcpReq.getSjh()));
-			str.append(tcpReq.getCsxy()+tcpReq.getXybj()+tcpReq.getCsmb()+tcpReq.getMbbj()+tcpReq.getTz()+tcpReq.getSg());
+			str.append(tcpReq.getCsxy()+tcpReq.getXybj()+tcpReq.getCsmb()+tcpReq.getMbbj()+tcpReq.getTz()+tcpReq.getSg()+tcpReq.getXlcjpl());
 			sb.append(str.length());
 			sb.append(str);
 			sb.append("]");
@@ -757,7 +771,7 @@ public class TcpFormatUtils {
 			sb.append(tcpReq.getBwlsh());
 			StringBuffer str = new StringBuffer();
 			str.append(new String(tcpReq.getImei()+tcpReq.getPid()+tcpReq.getSjh()));
-			str.append(","+tcpReq.getLybqmc()+","+tcpReq.getLybqid()+","+tcpReq.getYlkj());
+			str.append(","+tcpReq.getLybqmc()+","+tcpReq.getLybqid()+","+tcpReq.getLyhfbqid()+","+tcpReq.getLybqcjpl()+tcpReq.getYlkj());
 			sb.append(str.length());
 			sb.append(str.toString());
 			sb.append("]");

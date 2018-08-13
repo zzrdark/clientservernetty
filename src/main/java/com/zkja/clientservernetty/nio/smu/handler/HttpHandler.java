@@ -20,7 +20,7 @@ import java.util.Map;
 public class HttpHandler extends ChannelInboundHandlerAdapter {
 
     final Logger logger = LoggerFactory.getLogger(HttpHandler.class);
-    final String url;
+    private  String url;
     public HttpHandler(String url){
         this.url = url;
     }
@@ -28,7 +28,7 @@ public class HttpHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
         if (msg instanceof TcpRes){
-
+            url += "&sourceIp="+((TcpRes)msg).getSourceIp();
             //TODO 以后这里加判断是否下发上来的响应消息
             ChannelHandlerContext httpChannel = QueueManager.rmBwlshMap(((TcpRes)msg).getBwlsh());
             if(httpChannel != null){

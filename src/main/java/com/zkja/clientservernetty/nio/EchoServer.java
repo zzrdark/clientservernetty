@@ -16,6 +16,7 @@
 package com.zkja.clientservernetty.nio;
 
 
+import com.zkja.clientservernetty.common.SmuConstant;
 import com.zkja.clientservernetty.common.TcpFormatUtils;
 import com.zkja.clientservernetty.nio.smu.decoder.StringDecoder;
 import com.zkja.clientservernetty.nio.smu.encoder.StringEncoder;
@@ -63,6 +64,7 @@ public final class EchoServer implements Runnable {
 
     @Override
     public void run()  {
+
         // Configure SSL.
         /*final SslContext sslCtx;
         if (SSL) {
@@ -95,7 +97,7 @@ public final class EchoServer implements Runnable {
                      final StringDecoder stringDecoder = new StringDecoder();
                      final StringEncoder stringEncoder = new StringEncoder();
 
-                     final HttpHandler httpHandler = new HttpHandler(serverSocketProperties.getSmcUrl());
+                     final HttpHandler httpHandler = new HttpHandler(serverSocketProperties.getSmcUrl()+"?port="+serverSocketProperties.getPort());
                      //handler
                      final EchoServerHandler serverHandler = new EchoServerHandler();
                      final AccessMessageHandler accessMessageHandler = new AccessMessageHandler();

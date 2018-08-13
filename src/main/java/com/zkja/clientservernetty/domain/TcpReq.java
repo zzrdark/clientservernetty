@@ -1,12 +1,10 @@
 package com.zkja.clientservernetty.domain;
 
-import io.netty.handler.codec.http.HttpRequest;
-
 /**
  * @authon zzr
  */
 public class TcpReq {
-	private HttpRequest httpRequest;
+
     /**
      * 信息类型，如 80
      */
@@ -266,7 +264,19 @@ public class TcpReq {
 	 * 记步值
 	 */
 	private String qbz;
-
+	/**
+	 * 心率采集频率
+	 */
+	private String xlcjpl;
+	/**
+	 * 蓝牙合法标签ID
+	 */
+	private String lyhfbqid;
+	/**
+	 * 蓝牙标签采集频率
+	 */
+	private String lybqcjpl;
+	
 	public String getQbz() {
 		return qbz;
 	}
@@ -772,12 +782,30 @@ public class TcpReq {
 		this.sbaz = sbaz;
 	}
 
-	public HttpRequest getHttpRequest() {
-		return httpRequest;
+	
+	public String getXlcjpl() {
+		return xlcjpl;
 	}
 
-	public void setHttpRequest(HttpRequest httpRequest) {
-		this.httpRequest = httpRequest;
+	public void setXlcjpl(String xlcjpl) {
+		this.xlcjpl = xlcjpl;
+	}
+
+	
+	public String getLyhfbqid() {
+		return lyhfbqid;
+	}
+
+	public void setLyhfbqid(String lyhfbqid) {
+		this.lyhfbqid = lyhfbqid;
+	}
+
+	public String getLybqcjpl() {
+		return lybqcjpl;
+	}
+
+	public void setLybqcjpl(String lybqcjpl) {
+		this.lybqcjpl = lybqcjpl;
 	}
 
 	@Override
