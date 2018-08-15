@@ -387,113 +387,75 @@ public class TcpFormatUtils {
 		 * 下面是Smu-->ClientServer应答
 		 */
 
-
-    	
 		//登录
 		if(SmuConstant.ACTION_LOGIN_RES.equals(tcpReq.getBwlx())){
 			StringBuffer sb = new StringBuffer();
-			sb.append("[");
-			sb.append(tcpReq.getBwlx());
-			sb.append(tcpReq.getBwlsh());
+			sb.append("["+tcpReq.getBwlx()+tcpReq.getBwlsh());
 			String str = new String(tcpReq.getImei()+tcpReq.getPid()+tcpReq.getSjh()+tcpReq.getQdlx()+tcpReq.getDsscsj()+tcpReq.getSfjj()+tcpReq.getSjtb());
-			sb.append(str.length());
-			sb.append(str);
-			sb.append("]");
+			sb.append(str.length()+str.toString()+"]");
 			return sb.toString();
     	}
 
 		//退登
 		if(SmuConstant.ACTION_LOGOUT_RES.equals(tcpReq.getBwlx())){
 			StringBuffer sb = new StringBuffer();
-			sb.append("[");
-			sb.append(tcpReq.getBwlx());
-			sb.append(tcpReq.getBwlsh());
-
+			sb.append("["+tcpReq.getBwlx()+tcpReq.getBwlsh());
 			String str = new String(tcpReq.getImei()+tcpReq.getPid()+tcpReq.getSjh());
-			sb.append(str.length());
-			sb.append(str);
-			sb.append("]");
-
+			sb.append(str.length()+str.toString()+"]");
 			return sb.toString();
 		}
 
 		//链路
 		if(SmuConstant.ACTION_HEARTBEAT_RES.equals(tcpReq.getBwlx())){
 			StringBuffer sb = new StringBuffer();
-			sb.append("[");
-			sb.append(tcpReq.getBwlx());
-			sb.append(tcpReq.getBwlsh());
-
-
+			sb.append("["+tcpReq.getBwlx()+tcpReq.getBwlsh());
 			String str = new String(tcpReq.getImei()+tcpReq.getPid()+tcpReq.getSjh());
-			sb.append(str.length());
-			sb.append(str);
-			sb.append("]");
+			sb.append(str.length()+str.toString()+"]");
 			return sb.toString();
 		}
 
 		//安装
 		if(SmuConstant.ACTION_SMU_SETUP_RES.equals(tcpReq.getBwlx())){
 			StringBuffer sb = new StringBuffer();
-			sb.append("[");
-			sb.append(tcpReq.getBwlx());
-			sb.append(tcpReq.getBwlsh());
+			sb.append("["+tcpReq.getBwlx()+tcpReq.getBwlsh());
 			String str = new String(tcpReq.getImei()+tcpReq.getPid()+tcpReq.getSjh());
-			sb.append(str.length());
-			sb.append(str);
-			sb.append("]");
+			sb.append(str.length()+str.toString()+"]");
 			return sb.toString();
 		}
 
 		//定时报告
 		if (SmuConstant.ACTION_SMU_F2_ANSWER.equals(tcpReq.getBwlx())) {
 			StringBuffer sb = new StringBuffer();
-			sb.append("[");
-			sb.append(tcpReq.getBwlx());
-			sb.append(tcpReq.getBwlsh());
+			sb.append("["+tcpReq.getBwlx()+tcpReq.getBwlsh());
 			String str = new String(tcpReq.getImei()+tcpReq.getPid()+tcpReq.getSjh());
-			sb.append(str.length());
-			sb.append(str);
-			sb.append("]");
+			sb.append(str.length()+str.toString()+"]");
 			return sb.toString();
 		}
 
 		//版本汇报
 		if (SmuConstant.ACTION_SMU_WN_ANSWER.equals(tcpReq.getBwlx())) {
 			StringBuffer sb = new StringBuffer();
-			sb.append("[");
-			sb.append(tcpReq.getBwlx());
-			sb.append(tcpReq.getBwlsh());
+			sb.append("["+tcpReq.getBwlx()+tcpReq.getBwlsh());
 			String str = new String(tcpReq.getImei()+tcpReq.getPid()+tcpReq.getSjh());
-			sb.append(str.length());
-			sb.append(str);
-			sb.append("]");
+			sb.append(str.length()+str.toString()+"]");
 			return sb.toString();
 		}
 
 		//多基站协议
 		if (SmuConstant.ACTION_SMU_F5_ANSWER.equals(tcpReq.getBwlx())) {
 			StringBuffer sb = new StringBuffer();
-			sb.append("[");
-			sb.append(tcpReq.getBwlx());
-			sb.append(tcpReq.getBwlsh());
+			sb.append("["+tcpReq.getBwlx()+tcpReq.getBwlsh());
 			String str = new String(tcpReq.getImei()+tcpReq.getPid()+tcpReq.getSjh());
-			sb.append(str.length());
-			sb.append(str);
-			sb.append("]");
+			sb.append(str.length()+str.toString()+"]");
 			return sb.toString();
 		}
 
 		//请求SMU上报当前状态命令
 		if (SmuConstant.ACTION_SMU_F9_ANSWER.equals(tcpReq.getBwlx())) {
 			StringBuffer sb = new StringBuffer();
-			sb.append("[");
-			sb.append(tcpReq.getBwlx());
-			sb.append(tcpReq.getBwlsh());
+			sb.append("["+tcpReq.getBwlx()+tcpReq.getBwlsh());
 			String str = new String(tcpReq.getImei()+tcpReq.getPid()+tcpReq.getSjh());
-			sb.append(str.length());
-			sb.append(str);
-			sb.append("]");
+			sb.append(str.length()+str.toString()+"]");
 			return sb.toString();
 		}
 
@@ -505,74 +467,52 @@ public class TcpFormatUtils {
         //监禁
         if (SmuConstant.ACTION_IMPRISON_DISABLE.equals(tcpReq.getBwlx())) {
 			StringBuffer sb = new StringBuffer();
-			sb.append("[");
-			sb.append(tcpReq.getBwlx());
-			sb.append(tcpReq.getBwlsh());
+			sb.append("["+tcpReq.getBwlx()+tcpReq.getBwlsh());
 			String str = new String(tcpReq.getImei()+tcpReq.getPid()+tcpReq.getSjh());
-			sb.append(str.length());
-			sb.append(str);
-			sb.append("]");
+			sb.append(str.length()+str.toString()+"]");
             return sb.toString();
         }
 
         //解禁
 		if (SmuConstant.ACTION_IMPRISON_ENABLED.equals(tcpReq.getBwlx())) {
 			StringBuffer sb = new StringBuffer();
-			sb.append("[");
-			sb.append(tcpReq.getBwlx());
-			sb.append(tcpReq.getBwlsh());
+			sb.append("["+tcpReq.getBwlx()+tcpReq.getBwlsh());
 			String str = new String(tcpReq.getImei()+tcpReq.getPid()+tcpReq.getSjh());
-			sb.append(str.length());
-			sb.append(str);
-			sb.append("]");
+			sb.append(str.length()+str.toString()+"]");
 			return sb.toString();
 		}
 
 		//启动定时报告
 		if (SmuConstant.ACTION_STARTREPORT.equals(tcpReq.getBwlx())) {
 			StringBuffer sb = new StringBuffer();
-			sb.append("[");
-			sb.append(tcpReq.getBwlx());
-			sb.append(tcpReq.getBwlsh());
+			sb.append("["+tcpReq.getBwlx()+tcpReq.getBwlsh());
 			String str = new String(tcpReq.getImei()+tcpReq.getPid()+tcpReq.getSjh()+tcpReq.getQdlx()+tcpReq.getScsj());
-			sb.append(str.length());
-			sb.append(str);
-			sb.append("]");
+			sb.append(str.length()+str.toString()+"]");
 			return sb.toString();
 		}
 
 		//停止定时报告
 		if (SmuConstant.ACTION_STOPREPORT.equals(tcpReq.getBwlx())) {
 			StringBuffer sb = new StringBuffer();
-			sb.append("[");
-			sb.append(tcpReq.getBwlx());
-			sb.append(tcpReq.getBwlsh());
+			sb.append("["+tcpReq.getBwlx()+tcpReq.getBwlsh());
 			String str = new String(tcpReq.getImei()+tcpReq.getPid()+tcpReq.getSjh());
-			sb.append(str.length());
-			sb.append(str);
-			sb.append("]");
+			sb.append(str.length()+str.toString()+"]");
 			return sb.toString();
 		}
 
 		//请求SMU上报当前状态命令
 		if (SmuConstant.ACTION_SMUINFO.equals(tcpReq.getBwlx())) {
 			StringBuffer sb = new StringBuffer();
-			sb.append("[");
-			sb.append(tcpReq.getBwlx());
-			sb.append(tcpReq.getBwlsh());
+			sb.append("["+tcpReq.getBwlx()+tcpReq.getBwlsh());
 			String str = new String(tcpReq.getImei()+tcpReq.getPid()+tcpReq.getSjh());
-			sb.append(str.length());
-			sb.append(str);
-			sb.append("]");
+			sb.append(str.length()+str.toString()+"]");
 			return sb.toString();
 		}
 
 		//设置TCP通信参数
 		if (SmuConstant.ACTION_SYSCONF.equals(tcpReq.getBwlx())) {
 			StringBuffer sb = new StringBuffer();
-			sb.append("[");
-			sb.append(tcpReq.getBwlx());
-			sb.append(tcpReq.getBwlsh());
+			sb.append("["+tcpReq.getBwlx()+tcpReq.getBwlsh());
 			String str = new String(tcpReq.getImei()+tcpReq.getPid()+tcpReq.getSjh());
 			sb.append(str.length());
 			sb.append(str);
@@ -584,9 +524,7 @@ public class TcpFormatUtils {
 		//设置电子围栏
 		if (SmuConstant.ACTION_FENCECONF.equals(tcpReq.getBwlx())) {
 			StringBuffer sb = new StringBuffer();
-			sb.append("[");
-			sb.append(tcpReq.getBwlx());
-			sb.append(tcpReq.getBwlsh());
+			sb.append("["+tcpReq.getBwlx()+tcpReq.getBwlsh());
 			String str = new String(tcpReq.getImei()+"0000000000000000000000000");
 			sb.append(str.length());
 			sb.append(str);
@@ -599,13 +537,9 @@ public class TcpFormatUtils {
 		//设置灯
 		if (SmuConstant.ACTION_LIGHTCONF.equals(tcpReq.getBwlx())) {
 			StringBuffer sb = new StringBuffer();
-			sb.append("[");
-			sb.append(tcpReq.getBwlx());
-			sb.append(tcpReq.getBwlsh());
+			sb.append("["+tcpReq.getBwlx()+tcpReq.getBwlsh());
 			String str = new String(tcpReq.getImei()+"0000000000000000000000000"+tcpReq.getDkg()+tcpReq.getB1()+tcpReq.getB2());
-			sb.append(str.length());
-			sb.append(str);
-			sb.append("]");
+			sb.append(str.length()+str.toString()+"]");
 			return sb.toString();
 		}
 
@@ -632,9 +566,7 @@ public class TcpFormatUtils {
 		if (SmuConstant.ACTION_WN.equals(tcpReq.getBwlx())) {
 
 			StringBuffer sb = new StringBuffer();
-			sb.append("[");
-			sb.append(tcpReq.getBwlx());
-			sb.append(tcpReq.getBwlsh());
+			sb.append("["+tcpReq.getBwlx()+tcpReq.getBwlsh());
 			String str = new String(tcpReq.getImei()+tcpReq.getPid()+tcpReq.getSjh());
 			sb.append(str.length());
 			sb.append(str);
@@ -647,22 +579,16 @@ public class TcpFormatUtils {
 		// 中文协议
 		if (SmuConstant.ACTION_SMU_F6.equals(tcpReq.getBwlx())) {
 			StringBuffer sb = new StringBuffer();
-			sb.append("[");
-			sb.append(tcpReq.getBwlx());
-			sb.append(tcpReq.getBwlsh());
+			sb.append("["+tcpReq.getBwlx()+tcpReq.getBwlsh());
 			String str = new String(tcpReq.getImei()+tcpReq.getPid()+tcpReq.getSjh()+tcpReq.getNr());
-			sb.append(str.length());
-			sb.append(str);
-			sb.append("]");
+			sb.append(str.length()+str.toString()+"]");
 			return sb.toString();
 		}
 
 		// 参数设置
 		if (SmuConstant.ACTION_SMU_F7.equals(tcpReq.getBwlx())) {
 			StringBuffer sb = new StringBuffer();
-			sb.append("[");
-			sb.append(tcpReq.getBwlx());
-			sb.append(tcpReq.getBwlsh());
+			sb.append("["+tcpReq.getBwlx()+tcpReq.getBwlsh());
 			String str = new String(tcpReq.getImei()+tcpReq.getPid()+tcpReq.getSjh());
 			sb.append(str.length());
 			sb.append(str);
@@ -675,16 +601,12 @@ public class TcpFormatUtils {
 		// 开启运动参数定时
 		if (SmuConstant.ACTION_SMU_F8.equals(tcpReq.getBwlx())) {
 			StringBuffer sb = new StringBuffer();
-			sb.append("[");
-			sb.append(tcpReq.getBwlx());
-			sb.append(tcpReq.getBwlsh());
+			sb.append("["+tcpReq.getBwlx()+tcpReq.getBwlsh());
 			while(tcpReq.getNr().trim().length()<4){
 				tcpReq.setNr("0"+tcpReq.getNr().trim());
 			}
 			String str = new String(tcpReq.getImei()+tcpReq.getPid()+tcpReq.getSjh()+tcpReq.getNr());
-			sb.append(str.length());
-			sb.append(str);
-			sb.append("]");
+			sb.append(str.length()+str.toString()+"]");
 			return sb.toString();
 		}
 
@@ -693,14 +615,10 @@ public class TcpFormatUtils {
 		// 多基站实时
 		if (SmuConstant.ACTION_REPORT_FB.equals(tcpReq.getBwlx())||SmuConstant.ACTION_REPORT_REALTIME.equals(tcpReq.getBwlx())) {
 			StringBuffer sb = new StringBuffer();
-			sb.append("[");
-			sb.append(tcpReq.getBwlx());
-			sb.append(tcpReq.getBwlsh());
+			sb.append("["+tcpReq.getBwlx()+tcpReq.getBwlsh());
 			StringBuffer str = new StringBuffer();
 			str.append(new String(tcpReq.getImei()+tcpReq.getPid()+tcpReq.getSjh()));
-			sb.append(str.length());
-			sb.append(str);
-			sb.append("]");
+			sb.append(str.length()+str.toString()+"]");
 			return sb.toString();
 		}
 
@@ -710,15 +628,11 @@ public class TcpFormatUtils {
 		//运动参数实时请求
 		if (tcpRro5.equals(tcpReq.getBwlx())||tcpRro6.equals(tcpReq.getBwlx())) {
 			StringBuffer sb = new StringBuffer();
-			sb.append("[");
-			sb.append(tcpReq.getBwlx());
-			sb.append(tcpReq.getBwlsh());
+			sb.append("["+tcpReq.getBwlx()+tcpReq.getBwlsh());
 			StringBuffer str = new StringBuffer();
 			str.append(new String(tcpReq.getImei()+tcpReq.getPid()+tcpReq.getSjh()));
 			str.append(tcpReq.getCsxy()+tcpReq.getXybj()+tcpReq.getCsmb()+tcpReq.getMbbj()+tcpReq.getTz()+tcpReq.getSg());
-			sb.append(str.length());
-			sb.append(str);
-			sb.append("]");
+			sb.append(str.length()+str.toString()+"]");
 			return sb.toString();
 		}
 
@@ -750,15 +664,11 @@ public class TcpFormatUtils {
 			while(tcpReq.getXlcjpl().length()<4){
 				tcpReq.setXlcjpl("0"+tcpReq.getXlcjpl());
 			}
-			sb.append("[");
-			sb.append(tcpReq.getBwlx());
-			sb.append(tcpReq.getBwlsh());
+			sb.append("["+tcpReq.getBwlx()+tcpReq.getBwlsh());
 			StringBuffer str = new StringBuffer();
 			str.append(new String(tcpReq.getImei()+tcpReq.getPid()+tcpReq.getSjh()));
 			str.append(tcpReq.getCsxy()+tcpReq.getXybj()+tcpReq.getCsmb()+tcpReq.getMbbj()+tcpReq.getTz()+tcpReq.getSg()+tcpReq.getXlcjpl());
-			sb.append(str.length());
-			sb.append(str);
-			sb.append("]");
+			sb.append(str.length()+str.toString()+"]");
 			return sb.toString();
 		}
 
@@ -766,15 +676,11 @@ public class TcpFormatUtils {
 		//蓝牙
 		if (tcpRro2.equals(tcpReq.getBwlx())) {
 			StringBuffer sb = new StringBuffer();
-			sb.append("[");
-			sb.append(tcpReq.getBwlx());
-			sb.append(tcpReq.getBwlsh());
+			sb.append("["+tcpReq.getBwlx()+tcpReq.getBwlsh());
 			StringBuffer str = new StringBuffer();
 			str.append(new String(tcpReq.getImei()+tcpReq.getPid()+tcpReq.getSjh()));
 			str.append(","+tcpReq.getLybqmc()+","+tcpReq.getLybqid()+","+tcpReq.getLyhfbqid()+","+tcpReq.getLybqcjpl()+tcpReq.getYlkj());
-			sb.append(str.length());
-			sb.append(str.toString());
-			sb.append("]");
+			sb.append(str.length()+str.toString()+"]");
 			return sb.toString();
 		}
 
@@ -784,13 +690,9 @@ public class TcpFormatUtils {
 		//运动参数实时请求
 		if (tcpRro4.equals(tcpReq.getBwlx())||tcpRro3.equals(tcpReq.getBwlx())) {
 			StringBuffer sb = new StringBuffer();
-			sb.append("[");
-			sb.append(tcpReq.getBwlx());
-			sb.append(tcpReq.getBwlsh());
+			sb.append("["+tcpReq.getBwlx()+tcpReq.getBwlsh());
 			String str = new String(tcpReq.getImei()+tcpReq.getPid()+tcpReq.getSjh());
-			sb.append(str.length());
-			sb.append(str);
-			sb.append("]");
+			sb.append(str.length()+str.toString()+"]");
 			return sb.toString();
 		}
         return null;
