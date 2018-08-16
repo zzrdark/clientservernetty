@@ -1,10 +1,12 @@
 package com.zkja.clientservernetty.domain;
 
+import io.netty.handler.codec.http.HttpRequest;
+
 /**
  * @authon zzr
  */
 public class TcpReq {
-
+	private HttpRequest httpRequest;
     /**
      * 信息类型，如 80
      */
@@ -806,6 +808,14 @@ public class TcpReq {
 
 	public void setLybqcjpl(String lybqcjpl) {
 		this.lybqcjpl = lybqcjpl;
+	}
+
+	public HttpRequest getHttpRequest() {
+		return httpRequest;
+	}
+
+	public void setHttpRequest(HttpRequest httpRequest) {
+		this.httpRequest = httpRequest;
 	}
 
 	@Override
