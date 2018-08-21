@@ -11,6 +11,7 @@ import io.netty.util.concurrent.GenericFutureListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.InetSocketAddress;
 import java.util.Map;
 
 
@@ -28,7 +29,8 @@ public class HttpHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
         if (msg instanceof TcpRes){
-            url += "&sourceIp="+((TcpRes)msg).getSourceIp();
+//            url += "&sourceIp="+((TcpRes)msg).getSourceIp();
+            url += "&sourceIp="+(InetSocketAddress) ctx.channel().remoteAddress();
             //TODO 以后这里加判断是否下发上来的响应消息
             ChannelHandlerContext httpChannel = QueueManager.rmBwlshMap(((TcpRes)msg).getBwlsh());
             if(httpChannel != null){

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="30 seconds" debug="false">
-	<property name="log.base" value="D:/clientServer/2280" />
+	<property name="log.base" value="D:/clientServer/2282" />
 	<property name="log.proj" value="clientserver" />
 	<property name="logPattern"
 		value="%date|%thread|%X{uid}|%X{url}|%level{8}|%logger{60}:%line|%msg %ex ------%n"></property>
